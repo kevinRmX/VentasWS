@@ -18,8 +18,8 @@ namespace WSVentas.Controllers
         public IEnumerable<WeatherForecast> Get()
         {
             List<WeatherForecast> lst = new List<WeatherForecast>();
-            lst.Add(new WeatherForecast() { id = 5, name = "kevin" });
-            lst.Add(new WeatherForecast() { id = 6, name = "Fernando" });
+            lst.Add(new WeatherForecast() { id = 5, name = "Kevin" });
+            lst.Add(new WeatherForecast() { id = 7, name = "Pineda" });
             return lst; 
         }
     }
