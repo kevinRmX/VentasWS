@@ -16,10 +16,12 @@ namespace WSVentas.Models
         {
         }
 
-        public virtual DbSet<Cliente> Cliente { get; set; } = null!;
+        public virtual DbSet<Cliente> Clientes { get; set; } = null!;
         public virtual DbSet<Concepto> Conceptos { get; set; } = null!;
         public virtual DbSet<Producto> Productos { get; set; } = null!;
+        public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
         public virtual DbSet<Ventum> Venta { get; set; } = null!;
+        public object Cliente { get; internal set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -97,6 +99,28 @@ namespace WSVentas.Models
                 entity.Property(e => e.PrecioUnitario)
                     .HasColumnType("decimal(16, 2)")
                     .HasColumnName("precioUnitario");
+            });
+
+            modelBuilder.Entity<Usuario>(entity =>
+            {
+                entity.ToTable("usuario");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("email");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(256)
+                    .IsUnicode(false)
+                    .HasColumnName("password");
             });
 
             modelBuilder.Entity<Ventum>(entity =>

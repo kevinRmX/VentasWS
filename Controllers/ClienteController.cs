@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using WSVentas.Models;
 using WSVentas.Models.Response;
 using WSVentas.Models.Request;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WSVentas.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClienteController : ControllerBase
     {
         [HttpGet]
@@ -21,7 +23,7 @@ namespace WSVentas.Controllers
                 
                 using (VentasRealContext db = new VentasRealContext())
                 {
-                    var lst = db.Cliente.OrderByDescending(d => d.Id).ToList();
+                    var lst = db.Clientes.OrderByDescending(d => d.Id).ToList();
                     oRespuesta.Exito = 1;
                     oRespuesta.Data = lst;
                     
@@ -45,7 +47,7 @@ namespace WSVentas.Controllers
                 {
                     Cliente oCliente = new Cliente();
                     oCliente.Nombre = oModel.Nombre;
-                    db.Cliente.Add(oCliente);
+                    db.Clientes.Add(oCliente);
                     db.SaveChanges();
                     oRespuesta.Exito = 1;
                 }
@@ -66,7 +68,7 @@ namespace WSVentas.Controllers
             {
                 using (VentasRealContext db = new VentasRealContext())
                 {
-                    Cliente oCliente = db.Cliente.Find(oModel.Id);
+                    Cliente oCliente = db.Clientes.Find(oModel.Id);
                     oCliente.Nombre = oModel.Nombre;
                     db.Entry(oCliente).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.SaveChanges();
@@ -89,7 +91,7 @@ namespace WSVentas.Controllers
             {
                 using (VentasRealContext db = new VentasRealContext())
                 {
-                    Cliente oCliente = db.Cliente.Find(Id);
+                    Cliente oCliente = db.Clientes.Find(Id);
                     db.Remove(oCliente);
                     db.SaveChanges();
                     oRespuesta.Exito = 1;
@@ -102,7 +104,7 @@ namespace WSVentas.Controllers
             }
             return Ok(oRespuesta);
         }
-
+        
 
     }
 }
